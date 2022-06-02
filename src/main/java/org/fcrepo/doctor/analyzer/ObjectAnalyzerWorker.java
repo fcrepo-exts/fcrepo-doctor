@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Analyzes Fedora OCFL objects for problems and records any problems found. Each ObjectAnalyzerWorker is intended to
@@ -77,7 +78,7 @@ public class ObjectAnalyzerWorker implements Stoppable {
 
     private String getObjectId() {
         try {
-            return objectIdQueue.take();
+            return objectIdQueue.poll(1, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             stop = true;
             return null;

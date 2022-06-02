@@ -58,6 +58,9 @@ public class RepoAnalyzer {
         }
     }
 
+    /**
+     * Analyzes all of the object in a repository of problems. This should only be called once.
+     */
     public void analyze() {
         LOG.info("Analyzing repository");
 
@@ -81,15 +84,18 @@ public class RepoAnalyzer {
 
         waitForEmptyQueue();
         stopAnalyzers();
+        stop = true;
 
         LOG.info("Analysis complete");
     }
 
     private void stop() {
-        LOG.info("Stopping...");
-        stop = true;
-        stopAnalyzers();
-        drainQueue();
+        if (!stop) {
+            LOG.info("Stopping...");
+            stop = true;
+            stopAnalyzers();
+            drainQueue();
+        }
     }
 
     private void startAnalyzers() {

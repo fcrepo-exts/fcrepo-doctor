@@ -27,7 +27,6 @@ public class StoppableThread extends Thread implements Stoppable {
     @Override
     public void terminate() {
         stoppable.terminate();
-        this.interrupt();
     }
 
     @Override
